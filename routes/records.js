@@ -5,7 +5,17 @@ const db = require('../models')
 const Record = db.Record
 
 router.get('/', (req, res) => {
-  return res.render('index')
+  return Record.findAll({
+    attributes: ['categoryId', 'name', 'date', 'amount'],
+    raw: true
+  })
+    .then((records) => {
+      return res.render('index', { records })
+    })
+    .catch((error) => {
+      res.status(422).json(error)
+    })
+    
 })
 
 router.get('/new', (req, res) => {
@@ -17,7 +27,11 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  return res.redirect('/records')
+  const { name, date, amount, categoryId } = req.body;
+
+  return Record.create({ name, date, amount, categoryId })
+    .then((record) => { res.redirect('/records') })
+    .catch((err) => { console.log(err)})
 })
 
 router.put('/', (req, res) => {

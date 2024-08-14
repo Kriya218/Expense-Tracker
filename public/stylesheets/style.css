@@ -1,0 +1,17 @@
+.nav-text {
+  color: #de7302;
+}
+
+.nav-text:hover {
+  color: #b16b21;
+}
+
+.button {
+  color: white;
+  background-color: #fd9930
+}
+
+.button:hover {
+  color: white;
+  background-color: #e3892b
+}
