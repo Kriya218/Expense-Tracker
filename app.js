@@ -6,6 +6,8 @@ if (process.env.NODE_ENV === 'development') {
   require('dotenv').config()
 }
 
+const passport = require('./config/passport');
+
 const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
 const handlebars = require('handlebars');
@@ -35,6 +37,8 @@ app.use(session({
 }))
 
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(messageHandler);
 app.use(router);
 
