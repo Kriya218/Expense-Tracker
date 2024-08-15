@@ -6,6 +6,16 @@
   color: #b16b21;
 }
 
+.a-link {
+  color: #de7302;
+  text-decoration: none;
+}
+
+.a-link:hover {
+  color: #de7302;
+  text-decoration: none;
+}
+
 .button {
   color: white;
   background-color: #fd9930
@@ -14,4 +24,16 @@
 .button:hover {
   color: white;
   background-color: #e3892b
+}
+
+.category-icon {
+  color:#fd9930;
+}
+
+.record-text {
+  color: #7e4c18;
+}
+
+.card-text {
+  color:gray;
 }

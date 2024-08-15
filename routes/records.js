@@ -23,7 +23,14 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id/edit', (req, res) => {
-  return res.render('edit')
+  const id = req.params.id;
+
+  return Record.findByPk(id, {
+    attributes: ['id', 'name', 'date', 'amount', 'categoryId'],
+    raw: true
+    })
+      .then((record) => res.render('edit', { record }))
+      .catch((err) => { console.log(err) })
 })
 
 router.post('/', (req, res) => {
@@ -34,12 +41,20 @@ router.post('/', (req, res) => {
     .catch((err) => { console.log(err)})
 })
 
-router.put('/', (req, res) => {
-  return res.redirect('/records')
+router.put('/:id', (req, res) => {
+  const id =  req.params.id;
+  const { name, date, amount, categoryId } = req.body;
+
+  return Record.update({ name, date, amount, categoryId }, { where: { id } })
+    .then(() => res.redirect('/records'))
+    .catch((err) => console.log(err))
 })
 
-router.delete('/', (req, res) => {
-  return res.redirect('/records')
+router.delete('/:id', (req, res) => {
+  const id =  req.params.id;
+
+  return Record.destroy({ where: { id } })
+    .then(() => res.redirect('/records'))
 })
 
 module.exports = router;

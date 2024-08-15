@@ -1,0 +1,79 @@
+<header>
+  <!-- navigation -->
+  <nav class="navbar" style="background-color: #fef4ea;">
+    <div class="container">
+      <div class="d-flex align-items-center navbar-brand">
+        <span style="color: #de7302;"><i class="fa-solid fa-dollar-sign"></i> 家庭記帳本</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <form action="/logout" method="post">
+          <button type="submit" class="btn  card-link nav-text">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> 登出
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="container col-md-8 mt-3">
+  <div class="col">
+    <div class="d-flex justify-content-center mb-3">
+      <h4>修改支出紀錄</h4>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <form action="/records/{{record.id}}?_method=PUT" method="post">
+
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-4">
+            <label for="name" class="col-form-label">支出名稱</label>
+          </div>
+          <div class="col-md-8">
+            <input type="text" id="name" name="name" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-4">
+            <label for="date" class="col-form-label">支出日期</label>
+          </div>
+          <div class="col-md-8">
+            <input type="date" id="date" name="date" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-4">
+            <label for="categoryId" class="col-form-label">支出類別</label>
+          </div>
+          <div class="col-md-8">
+            <select id="categoryId" name="categoryId" class="form-select" required>
+              <option selected disabled>請選擇類別</option>
+              <option value="1">家居物業</option>
+              <option value="2">交通出行</option>
+              <option value="3">休閒娛樂</option>
+              <option value="4">餐飲食品</option>
+              <option value="5">醫療相關</option>
+              <option value="6">投資保險</option>
+              <option value="7">其他支出</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row g-3 align-items-center mb-3">
+          <div class="col-md-4">
+            <label for="amount" class="col-form-label">支出金額</label>
+          </div>
+          <div class="col-md-8">
+            <input type="number" id="amount" name="amount" class="form-control" min="0" required>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+          <button type="submit" class="btn button">新增紀錄</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
