@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const router = require('./routes');
 
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
+
 const { engine } = require('express-handlebars');
 const methodOverride = require('method-override');
 const handlebars = require('handlebars');

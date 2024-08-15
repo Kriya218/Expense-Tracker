@@ -6,7 +6,7 @@ const Record = db.Record
 
 router.get('/', (req, res, next) => {
   return Record.findAll({
-    attributes: ['categoryId', 'name', 'date', 'amount'],
+    attributes: ['id', 'categoryId', 'name', 'date', 'amount'],
     raw: true
   })
     .then((records) => {
@@ -24,10 +24,12 @@ router.get('/new', (req, res) => {
 
 router.get('/:id/edit', (req, res, next) => {
   const id = req.params.id;
-
+  
   return Record.findByPk(id, {
     attributes: ['id', 'name', 'date', 'amount', 'categoryId'], raw: true})
-    .then((record) => res.render('edit', { record }))
+    .then((record) => {
+      return res.render('edit', { record })
+    })
     .catch((error) => { 
       error.errorMessage = '資料讀取失敗';
       next(error)
