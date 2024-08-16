@@ -5,15 +5,28 @@ const db = require('../models')
 const Record = db.Record
 
 router.get('/', (req, res, next) => {
-  const userId = req.user.id
-
-  return Record.findAll({
+  const userId = req.user.id;
+  
+  return Record.findAndCountAll({
     attributes: ['id', 'categoryId', 'name', 'date', 'amount', 'userId'],
     where: { userId },
     raw: true
   })
-    .then((records) => {
-      return res.render('index', { records })
+    .then((data) => {
+      const records = data.rows;
+      const totoalRecords = data.count;
+      let totalAmount = 0;
+      
+      function addAmount() {
+        for (let i = 0; i < totoalRecords; i++) {
+          totalAmount += records[i].amount
+        }
+        return totalAmount
+      }
+        
+      totalAmount = addAmount();
+      console.log(totalAmount)
+      return res.render('index', { records, totalAmount })
     })
     .catch((error) => {
       error.errorMessage = '資料讀取失敗';
@@ -116,7 +129,7 @@ router.delete('/:id', (req, res, next) => {
         return res.redirect('/records')
       }
 
-      return Record.destroy()
+      return record.destroy()
         .then(() => {
           req.flash('success', '刪除成功')
           res.redirect('/records')

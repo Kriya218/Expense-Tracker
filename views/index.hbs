@@ -14,47 +14,74 @@
       </div>
     </div>
   </nav>
-
 </header>
 
-{{!-- sort dropdown --}}
-<div>
 
+{{!-- total amount --}}
+<div class="col-md-6 d-flex justify-content-center mt-4 mx-auto">
+  <p class="d-flex align-items-end">支出總金額:</p>
+  <h1 class="ms-3" style="color:#de7302; font-weight:700;">$ {{totalAmount}}</h1>
+</div>
+
+{{!-- sort dropdown --}}
+<div class="dropdown d-flex col-md-8 justify-content-end mx-auto mb-4 mt-4" >
+  <form action="/records" id="sortForm">
+    <select id="sort" class="form-select" style="color:#de7302;" name="sort" aria-label="sort select"
+      onchange="document.getElementById('sortForm').submit()">
+      <option selected disabled>篩選類別</option>
+      <option value="none" {{#if (eq sort 'none' )}}selected{{/if}}>不篩選</option>
+      <option value= 1 {{#if (eq sort 1 )}}selected{{/if}}>家居物業</option>
+      <option value= 2 {{#if (eq sort 2 )}}selected{{/if}}>交通出行</option>
+      <option value= 3 {{#if (eq sort 3 )}}selected{{/if}}>休閒娛樂</option>
+      <option value= 4 {{#if (eq sort 4 )}}selected{{/if}}>餐飲食品</option>
+      <option value= 5 {{#if (eq sort 5 )}}selected{{/if}}>醫療相關</option>
+      <option value= 6 {{#if (eq sort 6 )}}selected{{/if}}>投資保險</option>
+      <option value= 7 {{#if (eq record.categoryId 7)}}selected{{/if}}>其他支出</option>
+    </select>
+  </form>
 </div>
 
 {{!-- records list --}}
-<div class="container col col-md-8 d-flex justify-content-center mt-3">
-  {{> message}}
+<div class="container col-md-8 mt-3">
+  <div class="d-flex justify-content-center">{{> message}}</div>
   {{#each records}}
-
-  <div class="card col mb-3 ">
-    <div class="card-body row">
-      <div class="col col-md-auto d-flex justify-content-center align-items-center">
-        <i class="fa-solid fa-utensils fa-2xl category-icon"></i>
-      </div>
-      <div class="col col-md-7">
-        <h4 class="record-text">{{ this.name }}</h4>
-        <p class="card-text">{{ this.date }}</p>
-      </div>
-      <div class="col col-md-2 d-flex justify-content-center align-items-center">
-        <h4 class="record-text mb-0">${{ this.amount }}</h4>
-      </div>
-
-      <div class="col col-md-auto d-flex align-items-center ">
-        <a href="/records/{{ this.id }}/edit" class="a-link">
-          <i class="fa-regular fa-pen-to-square"></i> 修改
-        </a>
-      </div>
-      <div class="col col-md-auto d-flex align-items-center">
-        <form action="/records/{{ this.id }}?_method=DELETE" method="post">
-          <button type="submit" class="btn card-link" style="color:#de7302;">
-            <i class="fa-solid fa-trash"></i> 刪除
-          </button>
-        </form>
-      </div>
-
-    </div>
+  <div class="row">
+    <div class="card col mb-3 ">
+      <div class="card-body row">
+        <div class="col col-md-1 d-flex justify-content-center fa-xl align-items-center">
+          {{#if (eq this.categoryId 1)}}<i class="fa-solid fa-house fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 2)}}<i class="fa-solid fa-car-side fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 3)}}<i class="fa-solid fa-chess fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 4)}}<i class="fa-solid fa-utensils fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 5)}}<i class="fa-solid fa-stethoscope fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 6)}}<i class="fa-solid fa-arrow-trend-up fa-xl category-icon"></i>{{/if}}
+          {{#if (eq this.categoryId 7)}}<i class="fa-solid fa-question fa-xl category-icon"></i>{{/if}}
+        </div>
+        <div class="col col-md-6">
+          <h4 class="record-text">{{ this.name }}</h4>
+          <p class="card-text">{{ this.date }}</p>
+        </div>
+        <div class="col col-md-2 d-flex justify-content-center align-items-center">
+          <h4 class="record-text mb-0">${{ this.amount }}</h4>
+        </div>
     
+        <div class="col-md-3 d-flex justify-content-end">
+         <div class="col col-md-auto d-flex align-items-center">
+            <a href="/records/{{ this.id }}/edit" class="a-link">
+              <i class="fa-regular fa-pen-to-square"></i> 修改
+            </a>
+          </div>  
+          <div class="col col-md-auto d-flex align-items-center justify-content-end">
+            <form action="/records/{{ this.id }}?_method=DELETE" method="post">
+              <button type="submit" class="btn card-link" style="color:#de7302;">
+                <i class="fa-solid fa-trash"></i> 刪除
+              </button>
+            </form>
+          </div> 
+        </div>
+        
+      </div>
+    </div>
   </div>
   {{/each}}
   

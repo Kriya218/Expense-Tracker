@@ -18,7 +18,6 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
       }
       return bcrypt.compare(password, user.password)
         .then((isMatch) => {
-          console.log('isMatch', isMatch)
           if (!isMatch) {
             return done(null, false, { message: 'email或密碼錯誤' })
           }
