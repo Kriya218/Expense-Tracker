@@ -6,10 +6,12 @@ const Record = db.Record
 
 router.get('/', (req, res, next) => {
   const userId = req.user.id;
-  
+  const sort = req.query.sort;
+  const whereCondition = sort && sort !== 'none' ? { userId, categoryId: sort } : { userId };
+
   return Record.findAndCountAll({
     attributes: ['id', 'categoryId', 'name', 'date', 'amount', 'userId'],
-    where: { userId },
+    where: whereCondition,
     raw: true
   })
     .then((data) => {
@@ -25,7 +27,6 @@ router.get('/', (req, res, next) => {
       }
         
       totalAmount = addAmount();
-      console.log(totalAmount)
       return res.render('index', { records, totalAmount })
     })
     .catch((error) => {
