@@ -72,8 +72,8 @@
             </a>
           </div>  
           <div class="col col-md-auto d-flex align-items-center justify-content-end">
-            <form action="/records/{{ this.id }}?_method=DELETE" method="post">
-              <button type="submit" class="btn card-link" style="color:#de7302;">
+            <form id="delete-{{ this.id }}" action="/records/{{ this.id }}?_method=DELETE" method="post">
+              <button type="button" class="btn delete-button" data-bs-toggle="modal" data-bs-target="#delete_warning" record-id="{{ this.id }}" style="color:#de7302;">
                 <i class="fa-solid fa-trash"></i> 刪除
               </button>
             </form>
@@ -85,7 +85,6 @@
   </div>
   {{/each}}
   
-  
 </div>
 <div class="d-flex justify-content-center mt-3">
   <form action="/records/new" method="get">
@@ -94,3 +93,8 @@
     </button>
   </form>
 </div>
+
+
+{{> delete-confirm}}
+
+<script src="/javaScripts/delete-confirm.js"></script>
