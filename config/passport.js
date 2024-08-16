@@ -9,8 +9,8 @@ const User = db.User;
 
 passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, done) => {
   return User.findOne({ 
-    attributes: ['id', 'name', 'email', 'password' ],
-    where: {email: username},
+    attributes: [ 'id', 'name', 'email', 'password' ],
+    where: { email: username },
     raw: true
   })
     .then((user) => {
